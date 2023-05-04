@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Dolly V2</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="{{ url_for('static', filename='fractal-logo.jpg') }}" alt="Company Logo">
+        </header>
+        <h1>Dolly V2</h1>
+        <form id="string-form">
+            <label for="input-field">Enter a string and click submit:</label>
+            <textarea id="input-field" name="input" required></textarea>
+            <button type="submit" id="submit-button" >Submit</button>
+        </form>
+        <div id="result-container">
+            <label for="result">Result:</label>
+            <textarea id="result" ></textarea>
+            <button type="submit" id="refresh-button">Refresh</button>
+        </div>
+    </div>
+    <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

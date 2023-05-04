@@ -1,0 +1,131 @@
+/* Set box-sizing property and font family for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Set maximum width and center the container */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Center the header and add a small margin */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+/* Add some margin to the bottom of the header image */
+header img {
+    max-width: 200px;
+    margin-bottom: 0.5rem;
+}
+
+/* Center the h1 element and add some margin */
+h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Set up the form */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Add some style to the label element */
+label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+/* Style the input and textarea elements */
+input[type="text"], textarea {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+    margin-bottom: 0.5rem;
+    color: #555;
+    transition: border-color 0.2s ease-in-out;
+}
+
+/* Add a hover effect to the input and textarea elements */
+input[type="text"]:hover, textarea:hover {
+    border-color: #666;
+}
+
+/* Style the submit button */
+#submit-button {
+    background-color: #4285f4;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Add a hover effect to the submit button */
+#submit-button:hover {
+    background-color: #3367d6;
+}
+
+/* Style the result container */
+#result-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+/* Add some style to the result label */
+#result-container label {
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+/* Style the result textarea */
+#result {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+    resize: vertical;
+    min-height: 10rem;
+    color: #555;
+    transition: border-color 0.2s ease-in-out;
+}
+
+/* Add a hover effect to the result textarea */
+#result:hover {
+    border-color: #666;
+}
+
+/* Style the refresh button */
+#refresh-button {
+    background-color: #4285f4;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Add a hover effect to the refresh button */
+#refresh-button:hover {
+    background-color: #3367d6;
+}
