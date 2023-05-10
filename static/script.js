@@ -1,6 +1,9 @@
 const form = document.getElementById("string-form");
 const inputField = document.getElementById("input-field");
 const refreshButton = document.getElementById('refresh-button');
+const collibraButton = document.getElementById('collibra-button');
+const clearButton = document.getElementById('clear-button');
+
 const resultTextarea = document.getElementById('result');
 
 // Add an event listener to the "Submit" button
@@ -40,5 +43,49 @@ refreshButton.addEventListener('click', () => {
       resultTextarea.value = result;
     })
     .catch(error => console.error(error));
+});
+
+// Add an event listener to the "Collibra" button
+
+
+collibraButton.addEventListener('click', () => {
+    fetch('/collibra_insert', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            // add any data you want to send with the request here
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            // display the response as an alert
+            alert(JSON.stringify(data));
+            // set the response as the text content of the result textarea
+            resultTextarea.textContent = JSON.stringify(data);
+        })
+        .catch(error => console.error(error));
+});
+
+clearButton.addEventListener('click', () => {
+    fetch('/delete_output', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            // add any data you want to send with the request here
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            // display the response as an alert
+            alert(JSON.stringify(data));
+            // set the response as the text content of the result textarea
+            resultTextarea.textContent = "";
+            inputField.value = "";
+        })
+        .catch(error => console.error(error));
 });
 

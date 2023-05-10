@@ -89,6 +89,8 @@ input[type="text"]:hover, textarea:hover {
     margin-top: 1rem;
 }
 
+
+
 /* Add some style to the result label */
 #result-container label {
     margin-bottom: 0.5rem;
@@ -114,18 +116,48 @@ input[type="text"]:hover, textarea:hover {
     border-color: #666;
 }
 
-/* Style the refresh button */
-#refresh-button {
-    background-color: #4285f4;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+
+
+/* Center the upload form */
+#upload-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center; /* Center horizontally */
 }
 
-/* Add a hover effect to the refresh button */
-#refresh-button:hover {
-    background-color: #3367d6;
+#upload-form label {
+    margin-right: 10px;
 }
+
+/* Style the upload button */
+#upload-form button {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: #4285f4;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out; /* Add a transition effect */
+}
+
+#upload-form button:hover {
+    background-color: #006080; /* Change background color on hover */
+}
+
+.btn {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #4285f4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.btn:hover {
+	background-color: #3367d6;
+}
+
