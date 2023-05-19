@@ -158,6 +158,29 @@ input[type="text"]:hover, textarea:hover {
     cursor: pointer;
 }
 .btn:hover {
-	background-color: #3367d6;
+    background-color: #3367d6;
 }
 
+/* CSS for the loading spinner animation */
+@keyframes spinner {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* CSS for the loading animation in the input field */
+input.loading {
+    position: relative;
+}
+
+input.loading::after {
+    content: "";
+    border: 2px solid black; /* Set the spinner border color to black */
+    border-top-color: transparent;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: calc(50% - 10px);
+    right: 10px;
+    animation: spinner 0.8s linear infinite;
+}
