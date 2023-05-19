@@ -19,15 +19,19 @@
         <form id="string-form">
             <label for="input-field">Enter a string and click submit:</label>
             <textarea id="input-field" name="input" required></textarea>
-            <button type="submit" id="submit-button" >Submit</button>
+            <button type="submit" id="submit-button">Submit</button>
         </form>
-        <div id="result-container">
+        <div id="processing-animation" class="hide">
+            <div class="loader"></div>
+        </div>
+        <div id="result-container" class="hide">
             <label for="result">Result:</label>
             <textarea id="result"></textarea>
             <div class="btn-group">
                 <button class="btn" id="refresh-button">Refresh</button>
-			    <button class="btn" id="collibra-button">Collibra</button>
-		    </div>
+                <button class="btn" id="update-button">Update</button>
+                <button class="btn" id="collibra-button">Collibra</button>
+            </div>
         </div>
 
     </div>

@@ -7,15 +7,26 @@ const clearButton = document.getElementById('clear-button');
 const resultTextarea = document.getElementById('result');
 
 // Add an event listener to the "Submit" button
-const submitButton = document.getElementById("submit-button");
+//const submitButton = document.getElementById("submit-button");
 
-form.addEventListener("submit", (event) => {
-    event.preventDefault();
+document.addEventListener("DOMContentLoaded", function() {
+    var submitButton = document.getElementById('submit-button');
+    var updateButton = document.getElementById('update-button');
+    submitButton.addEventListener('click', handleFormSubmission);
+    updateButton.addEventListener('click', handleFormSubmission);
+});
+
+
+
+function handleFormSubmission(event) {
+    event.preventDefault(); // Prevent form submission
+
+    var submitButton = document.getElementById('submit-button');
+    var processingAnimation = document.getElementById('processing-animation');
+
+    submitButton.classList.add('hide');
+    processingAnimation.classList.remove('hide');
     const inputValue = inputField.value;
-    inputField.classList.add("loading"); // Add loading class to the input field
-    inputField.disabled = true; // Disable the input field
-    submitButton.disabled = true; // Disable the submit button
-
     fetch("/submit_prompt", {
         method: "POST",
         body: JSON.stringify({input: inputValue}),
@@ -24,43 +35,57 @@ form.addEventListener("submit", (event) => {
         }
     })
     .then(response => {
-        inputField.classList.remove("loading"); // Remove loading class from the input field
-        inputField.disabled = false; // Enable the input field
-        submitButton.disabled = false; // Enable the submit button
-
         if (response.ok) {
             // Input field value is not cleared if the request was successful
-            alert('Prompt submitted.');
+            //alert('Prompt submitted.');
         } else {
-            // Display an error message if the request was unsuccessful
+        // Display an error message if the request was unsuccessful
             alert('Error submitting prompt. Please try again.');
         }
     })
     .catch(error => console.error(error));
+    // Simulating a delay for the processing animation (replace with actual processing logic)
+    setTimeout(function() {
+        hideLoader();
+        showSubmitButton();
+        setTimeout(function() {
+            refreshButton.click(); // Trigger click event for refresh button
+        }, 0);
+    }, 2000);
+}
+
+function hideLoader() {
+    var processingAnimation = document.getElementById('processing-animation');
+    processingAnimation.classList.add('hide');
+}
+
+function showSubmitButton() {
+    var submitButton = document.getElementById('submit-button');
+    submitButton.classList.remove('hide');
+}
+
+
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const inputValue = inputField.value;
+    fetch("/submit_prompt", {
+        method: "POST",
+        body: JSON.stringify({input: inputValue}),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+      if (response.ok) {
+        // Input field value is not cleared if the request was successful
+        alert('Prompt submitted.');
+      } else {
+        // Display an error message if the request was unsuccessful
+        alert('Error submitting prompt. Please try again.');
+      }
+    })
+    .catch(error => console.error(error));
 });
-
-
-//form.addEventListener("submit", (event) => {
-//    event.preventDefault();
-//    const inputValue = inputField.value;
-//    fetch("/submit_prompt", {
-//        method: "POST",
-//        body: JSON.stringify({input: inputValue}),
-//        headers: {
-//            "Content-Type": "application/json"
-//        }
-//    })
-//    .then(response => {
-//      if (response.ok) {
-//        // Input field value is not cleared if the request was successful
-//        alert('Prompt submitted.');
-//      } else {
-//        // Display an error message if the request was unsuccessful
-//        alert('Error submitting prompt. Please try again.');
-//      }
-//    })
-//    .catch(error => console.error(error));
-//});
 
 
 
