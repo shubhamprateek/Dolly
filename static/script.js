@@ -169,7 +169,7 @@ function showData() {
   }
 
   // Create table rows
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < 19; i++) {
     var row = table.insertRow();
     for (var key in data[i]) {
       var cell = row.insertCell();
