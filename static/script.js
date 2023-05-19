@@ -125,6 +125,93 @@ collibraButton.addEventListener('click', () => {
         .catch(error => console.error(error));
 });
 
+// Function to close the popup
+function closePopup() {
+  var popup = document.getElementById("popup");
+  popup.classList.add("hidden");
+}
+
+// Function to parse CSV data into a JS object
+function parseCSV(csvData) {
+  var lines = csvData.split("\n");
+  var result = [];
+  var headers = lines[0].split(",");
+
+  for (var i = 1; i < lines.length; i++) {
+    var obj = {};
+    var currentLine = lines[i].split(",");
+
+    for (var j = 0; j < headers.length; j++) {
+      obj[headers[j]] = currentLine[j];
+    }
+
+    result.push(obj);
+  }
+
+  return result;
+}
+
+// Function to display the first 10 rows in a popup
+function showData() {
+  var data = JSON.parse(localStorage.getItem('uploadedData'));
+  var table = document.getElementById("data-table");
+
+  // Clear previous data
+  table.innerHTML = "";
+
+  // Create table headers
+  var thead = table.createTHead();
+  var row = thead.insertRow();
+  for (var header in data[0]) {
+    var th = document.createElement("th");
+    th.textContent = header;
+    row.appendChild(th);
+  }
+
+  // Create table rows
+  for (var i = 0; i < 10; i++) {
+    var row = table.insertRow();
+    for (var key in data[i]) {
+      var cell = row.insertCell();
+      cell.textContent = data[i][key];
+    }
+  }
+
+  // Show the popup
+  var popup = document.getElementById("popup");
+  popup.classList.remove("hidden");
+}
+
+// Event listener for the upload form
+document.getElementById("upload-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  var fileInput = document.getElementById("file-upload");
+  var file = fileInput.files[0];
+  var reader = new FileReader();
+
+  reader.onload = function(e) {
+    var contents = e.target.result;
+    var parsedData = parseCSV(contents);
+
+    localStorage.setItem('uploadedData', JSON.stringify(parsedData));
+    alert("Data uploaded successfully!");
+  };
+
+  reader.readAsText(file);
+});
+
+// Event listener for the show button
+document.getElementById("show-button").addEventListener("click", showData);
+
+// Event listener for the close button
+document.getElementById("popup").addEventListener("click", function(e) {
+  if (e.target.classList.contains("close-button")) {
+    closePopup();
+  }
+});
+
+
 //clearButton.addEventListener('click', () => {
 //    fetch('/delete_output', {
 //        method: 'GET',
