@@ -37,17 +37,31 @@ def update_answer():
 
 @app.route('/refresh_output', methods=['GET'])
 def refresh_output():
-    # Open the Excel file
-    wb = openpyxl.load_workbook(r"C:\Users\shubham.prateek\Downloads\example.xlsx")
+    file_path = r"C:\Users\shubham.prateek\Downloads\example.xlsx"
 
-    # Select the first worksheet
-    ws = wb.active
+    # Check if the file exists
+    if not os.path.isfile(file_path):
+        return "Excel file not found"
 
-    # Find the value in the most recent row of the "Output" column
-    row_num = ws.max_row
-    output = ws.cell(row=row_num, column=2).value
-    wb.close()
-    return output
+    try:
+        # Open the Excel file
+        wb = openpyxl.load_workbook(file_path)
+
+        # Select the first worksheet
+        ws = wb.active
+
+        # Find the value in the most recent row of the "Output" column
+        row_num = ws.max_row
+        output = ws.cell(row=row_num, column=2).value
+
+        # Close the workbook
+        wb.close()
+
+        return output
+
+    except FileNotFoundError:
+        return "Excel file not found"
+
 
 
 @app.route('/delete_output', methods=['GET'])

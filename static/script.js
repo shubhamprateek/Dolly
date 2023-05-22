@@ -21,10 +21,10 @@ function handleFormSubmission(event) {
     event.preventDefault(); // Prevent form submission
 
     var submitButton = document.getElementById('submit-button');
-    var processingAnimation = document.getElementById('processing-animation');
+    //var processingAnimation = document.getElementById('processing-animation');
 
-    submitButton.classList.add('hide');
-    processingAnimation.classList.remove('hide');
+    //submitButton.classList.add('hide');
+    //processingAnimation.classList.remove('hide');
     const inputValue = inputField.value;
     fetch("/submit_prompt", {
         method: "POST",
@@ -36,14 +36,13 @@ function handleFormSubmission(event) {
     .then(response => {
         if (response.ok) {
             // Input field value is not cleared if the request was successful
-            //alert('Prompt submitted.');
+            alert('Prompt submitted.');
         } else {
         // Display an error message if the request was unsuccessful
             alert('Error submitting prompt. Please try again.');
         }
     })
     .catch(error => console.error(error));
-    // Simulating a delay for the processing animation (replace with actual processing logic)
 
 }
 
@@ -89,11 +88,21 @@ refreshButton.addEventListener('click', () => {
   fetch('/refresh_output')
     .then(response => response.text())
     .then(result => {
+      // Check if the result is "Excel file is not found"
+      if (result === "Excel file not found") {
+        resultTextarea.style.color = "lightgray";
+        resultTextarea.value = "Please Wait! Generating Results..."
+      } else {
+        resultTextarea.style.color = "inherit";
+        resultTextarea.value = result;
+      }
+
       // Populate the result in the textarea
-      resultTextarea.value = result;
+
     })
     .catch(error => console.error(error));
 });
+
 
 // Add an event listener to the "Update" button
 updateButton.addEventListener("click", (event) => {
