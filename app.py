@@ -31,6 +31,7 @@ def submit_prompt():
 def update_answer():
     data = request.get_json()
     prompt = data['input']
+    print(prompt)
     update_answer_into_excel(prompt)
     return 'Answer Saved Successfully'
 
@@ -45,6 +46,7 @@ def refresh_output():
     # Find the value in the most recent row of the "Output" column
     row_num = ws.max_row
     output = ws.cell(row=row_num, column=2).value
+    wb.close()
     return output
 
 
@@ -118,6 +120,7 @@ def insert_prompt_into_excel(prompt):
 
     # Save the changes to the Excel file
     wb.save('example.xlsx')
+    wb.close()
 
 def update_answer_into_excel(prompt):
     # Open the Excel file
@@ -130,7 +133,8 @@ def update_answer_into_excel(prompt):
     prompt_cell.value = prompt
 
     # Save the changes to the Excel file
-    wb.save('example.xlsx')
+    wb.save('C:/Users/shubham.prateek/Downloads/example.xlsx')
+    wb.close()
 
 
 if __name__ == '__main__':

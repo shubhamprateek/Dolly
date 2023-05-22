@@ -44,13 +44,7 @@ function handleFormSubmission(event) {
     })
     .catch(error => console.error(error));
     // Simulating a delay for the processing animation (replace with actual processing logic)
-    setTimeout(function() {
-        hideLoader();
-        showSubmitButton();
-        setTimeout(function() {
-            refreshButton.click(); // Trigger click event for refresh button
-        }, 0);
-    }, 2000);
+
 }
 
 function hideLoader() {
@@ -104,11 +98,11 @@ refreshButton.addEventListener('click', () => {
 // Add an event listener to the "Update" button
 updateButton.addEventListener("click", (event) => {
     event.preventDefault();
-    const inputValue = textArea.value;
-    console.log(inputValue);
+    const updatedValue = textArea.value;
+    console.log(updatedValue);
     fetch("/update_answer", {
         method: "POST",
-        body: JSON.stringify({input: inputValue}),
+        body: JSON.stringify({input: updatedValue}),
         headers: {
             "Content-Type": "application/json"
         }
@@ -256,3 +250,9 @@ document.getElementById("popup").addEventListener("click", function(e) {
 //        .catch(error => console.error(error));
 //});
 //
+function handleImageClick() {
+    var submitButton = document.getElementById('submit-button');
+    var processingAnimation = document.getElementById('processing-animation');
+    submitButton.classList.remove('hide');
+    processingAnimation.classList.add('hide');
+}
