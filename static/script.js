@@ -1,9 +1,10 @@
 const form = document.getElementById("string-form");
 const inputField = document.getElementById("input-field");
 const refreshButton = document.getElementById('refresh-button');
+const updateButton = document.getElementById('update-button');
 const collibraButton = document.getElementById('collibra-button');
 const clearButton = document.getElementById('clear-button');
-
+const textArea = document.getElementById('result')
 const resultTextarea = document.getElementById('result');
 
 // Add an event listener to the "Submit" button
@@ -11,9 +12,7 @@ const resultTextarea = document.getElementById('result');
 
 document.addEventListener("DOMContentLoaded", function() {
     var submitButton = document.getElementById('submit-button');
-    var updateButton = document.getElementById('update-button');
     submitButton.addEventListener('click', handleFormSubmission);
-    updateButton.addEventListener('click', handleFormSubmission);
 });
 
 
@@ -102,6 +101,30 @@ refreshButton.addEventListener('click', () => {
     .catch(error => console.error(error));
 });
 
+// Add an event listener to the "Update" button
+updateButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    const inputValue = textArea.value;
+    console.log(inputValue);
+    fetch("/update_answer", {
+        method: "POST",
+        body: JSON.stringify({input: inputValue}),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+      if (response.ok) {
+        // Input field value is not cleared if the request was successful
+        alert('Answer Updated.');
+      } else {
+        // Display an error message if the request was unsuccessful
+        alert('Error submitting Answer. Please try again.');
+      }
+    })
+    .catch(error => console.error(error));
+});
+
 // Add an event listener to the "Collibra" button
 
 
@@ -118,9 +141,9 @@ collibraButton.addEventListener('click', () => {
         .then(response => response.json())
         .then(data => {
             // display the response as an alert
-            alert(JSON.stringify(data));
+            //alert(JSON.stringify(data));
             // set the response as the text content of the result textarea
-            resultTextarea.textContent = JSON.stringify(data);
+            //resultTextarea.textContent = JSON.stringify(data);
         })
         .catch(error => console.error(error));
 });

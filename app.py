@@ -27,6 +27,13 @@ def submit_prompt():
     insert_prompt_into_excel(prompt)
     return 'Prompt Saved Successfully'
 
+@app.route('/update_answer', methods=['POST'])
+def update_answer():
+    data = request.get_json()
+    prompt = data['input']
+    update_answer_into_excel(prompt)
+    return 'Answer Saved Successfully'
+
 @app.route('/refresh_output', methods=['GET'])
 def refresh_output():
     # Open the Excel file
@@ -60,6 +67,7 @@ def Patch():
 
     # Read the outputs
     outs = pd.read_excel(r"C:\Users\shubham.prateek\Downloads\example.xlsx")
+    #print(outs)
     # generate input structure
     df = pd.DataFrame(["FACT_CALL"], columns=['Column Name'])
     # Stores the assets UUID
@@ -95,7 +103,7 @@ def Patch():
                     print(f"{assetName} {k} Attribute added: {res}")
 
     #runApprovalWF(df["Column Uuid"])
-    return "d"
+    return attributeTypeId
 
 
 def insert_prompt_into_excel(prompt):
@@ -106,6 +114,19 @@ def insert_prompt_into_excel(prompt):
     ws = wb.active
 
     prompt_cell = ws.cell(row=ws.max_row, column=1)
+    prompt_cell.value = prompt
+
+    # Save the changes to the Excel file
+    wb.save('example.xlsx')
+
+def update_answer_into_excel(prompt):
+    # Open the Excel file
+    wb = openpyxl.load_workbook('C:/Users/shubham.prateek/Downloads/example.xlsx')
+
+    # Select the first worksheet
+    ws = wb.active
+
+    prompt_cell = ws.cell(row=ws.max_row, column=2)
     prompt_cell.value = prompt
 
     # Save the changes to the Excel file
