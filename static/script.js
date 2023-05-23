@@ -1,9 +1,10 @@
 const form = document.getElementById("string-form");
 const inputField = document.getElementById("input-field");
 const refreshButton = document.getElementById('refresh-button');
+const updateButton = document.getElementById('update-button');
 const collibraButton = document.getElementById('collibra-button');
 const clearButton = document.getElementById('clear-button');
-
+const textArea = document.getElementById('result')
 const resultTextarea = document.getElementById('result');
 
 // Add an event listener to the "Submit" button
@@ -11,9 +12,7 @@ const resultTextarea = document.getElementById('result');
 
 document.addEventListener("DOMContentLoaded", function() {
     var submitButton = document.getElementById('submit-button');
-    var updateButton = document.getElementById('update-button');
     submitButton.addEventListener('click', handleFormSubmission);
-    updateButton.addEventListener('click', handleFormSubmission);
 });
 
 
@@ -22,10 +21,10 @@ function handleFormSubmission(event) {
     event.preventDefault(); // Prevent form submission
 
     var submitButton = document.getElementById('submit-button');
-    var processingAnimation = document.getElementById('processing-animation');
+    //var processingAnimation = document.getElementById('processing-animation');
 
-    submitButton.classList.add('hide');
-    processingAnimation.classList.remove('hide');
+    //submitButton.classList.add('hide');
+    //processingAnimation.classList.remove('hide');
     const inputValue = inputField.value;
     fetch("/submit_prompt", {
         method: "POST",
@@ -37,21 +36,14 @@ function handleFormSubmission(event) {
     .then(response => {
         if (response.ok) {
             // Input field value is not cleared if the request was successful
-            //alert('Prompt submitted.');
+            alert('Prompt submitted.');
         } else {
         // Display an error message if the request was unsuccessful
             alert('Error submitting prompt. Please try again.');
         }
     })
     .catch(error => console.error(error));
-    // Simulating a delay for the processing animation (replace with actual processing logic)
-    setTimeout(function() {
-        hideLoader();
-        showSubmitButton();
-        setTimeout(function() {
-            refreshButton.click(); // Trigger click event for refresh button
-        }, 0);
-    }, 2000);
+
 }
 
 function hideLoader() {
@@ -96,8 +88,42 @@ refreshButton.addEventListener('click', () => {
   fetch('/refresh_output')
     .then(response => response.text())
     .then(result => {
+      // Check if the result is "Excel file is not found"
+      if (result === "Excel file not found") {
+        resultTextarea.style.color = "lightgray";
+        resultTextarea.value = "Please Wait! Generating Results..."
+      } else {
+        resultTextarea.style.color = "inherit";
+        resultTextarea.value = result;
+      }
+
       // Populate the result in the textarea
-      resultTextarea.value = result;
+
+    })
+    .catch(error => console.error(error));
+});
+
+
+// Add an event listener to the "Update" button
+updateButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    const updatedValue = textArea.value;
+    console.log(updatedValue);
+    fetch("/update_answer", {
+        method: "POST",
+        body: JSON.stringify({input: updatedValue}),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+      if (response.ok) {
+        // Input field value is not cleared if the request was successful
+        alert('Answer Updated.');
+      } else {
+        // Display an error message if the request was unsuccessful
+        alert('Error submitting Answer. Please try again.');
+      }
     })
     .catch(error => console.error(error));
 });
@@ -118,9 +144,10 @@ collibraButton.addEventListener('click', () => {
         .then(response => response.json())
         .then(data => {
             // display the response as an alert
-            alert(JSON.stringify(data));
+            //alert(JSON.stringify(data));
             // set the response as the text content of the result textarea
-            resultTextarea.textContent = JSON.stringify(data);
+            //resultTextarea.textContent = JSON.stringify(data);
+            alert('Updated')
         })
         .catch(error => console.error(error));
 });
@@ -233,3 +260,9 @@ document.getElementById("popup").addEventListener("click", function(e) {
 //        .catch(error => console.error(error));
 //});
 //
+function handleImageClick() {
+    var submitButton = document.getElementById('submit-button');
+    var processingAnimation = document.getElementById('processing-animation');
+    submitButton.classList.remove('hide');
+    processingAnimation.classList.add('hide');
+}

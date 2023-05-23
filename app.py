@@ -27,18 +27,41 @@ def submit_prompt():
     insert_prompt_into_excel(prompt)
     return 'Prompt Saved Successfully'
 
+@app.route('/update_answer', methods=['POST'])
+def update_answer():
+    data = request.get_json()
+    prompt = data['input']
+    print(prompt)
+    update_answer_into_excel(prompt)
+    return 'Answer Saved Successfully'
+
 @app.route('/refresh_output', methods=['GET'])
 def refresh_output():
-    # Open the Excel file
-    wb = openpyxl.load_workbook(r"C:\Users\shubham.prateek\Downloads\example.xlsx")
+    file_path = r"C:\Users\shubham.prateek\Downloads\example.xlsx"
 
-    # Select the first worksheet
-    ws = wb.active
+    # Check if the file exists
+    if not os.path.isfile(file_path):
+        return "Excel file not found"
 
-    # Find the value in the most recent row of the "Output" column
-    row_num = ws.max_row
-    output = ws.cell(row=row_num, column=2).value
-    return output
+    try:
+        # Open the Excel file
+        wb = openpyxl.load_workbook(file_path)
+
+        # Select the first worksheet
+        ws = wb.active
+
+        # Find the value in the most recent row of the "Output" column
+        row_num = ws.max_row
+        output = ws.cell(row=row_num, column=2).value
+
+        # Close the workbook
+        wb.close()
+
+        return output
+
+    except FileNotFoundError:
+        return "Excel file not found"
+
 
 
 @app.route('/delete_output', methods=['GET'])
@@ -60,6 +83,7 @@ def Patch():
 
     # Read the outputs
     outs = pd.read_excel(r"C:\Users\shubham.prateek\Downloads\example.xlsx")
+    #print(outs)
     # generate input structure
     df = pd.DataFrame(["FACT_CALL"], columns=['Column Name'])
     # Stores the assets UUID
@@ -93,9 +117,10 @@ def Patch():
                 else:
                     res = addAttribute(df.loc[i, "Column Uuid"], v, val)
                     print(f"{assetName} {k} Attribute added: {res}")
-
-    #runApprovalWF(df["Column Uuid"])
-    return "d"
+    print(df["Column Uuid"].tolist())
+    print(type(df["Column Uuid"]))
+    runApprovalWF(df["Column Uuid"].tolist())
+    return attributeTypeId
 
 
 def insert_prompt_into_excel(prompt):
@@ -110,6 +135,21 @@ def insert_prompt_into_excel(prompt):
 
     # Save the changes to the Excel file
     wb.save('example.xlsx')
+    wb.close()
+
+def update_answer_into_excel(prompt):
+    # Open the Excel file
+    wb = openpyxl.load_workbook('C:/Users/shubham.prateek/Downloads/example.xlsx')
+
+    # Select the first worksheet
+    ws = wb.active
+
+    prompt_cell = ws.cell(row=ws.max_row, column=2)
+    prompt_cell.value = prompt
+
+    # Save the changes to the Excel file
+    wb.save('C:/Users/shubham.prateek/Downloads/example.xlsx')
+    wb.close()
 
 
 if __name__ == '__main__':

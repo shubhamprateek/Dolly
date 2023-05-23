@@ -102,7 +102,7 @@ def runApprovalWF(assetId):
     start_workflow = 'https://fractalanalytics.collibra.com/rest/2.0/workflowInstances/'
     payload = json.dumps({
         "workflowDefinitionId": 'aa0136f5-4b0d-414a-b5cc-83fa962a96ad',
-        'businessItemIds': [assetId],
+        'businessItemIds': assetId,
         'businessItemType': 'ASSET',
         "sendNotification": True
     })
