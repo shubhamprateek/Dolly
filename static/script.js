@@ -147,6 +147,7 @@ collibraButton.addEventListener('click', () => {
             //alert(JSON.stringify(data));
             // set the response as the text content of the result textarea
             //resultTextarea.textContent = JSON.stringify(data);
+            alert('Updated')
         })
         .catch(error => console.error(error));
 });

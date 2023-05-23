@@ -117,8 +117,9 @@ def Patch():
                 else:
                     res = addAttribute(df.loc[i, "Column Uuid"], v, val)
                     print(f"{assetName} {k} Attribute added: {res}")
-
-    #runApprovalWF(df["Column Uuid"])
+    print(df["Column Uuid"].tolist())
+    print(type(df["Column Uuid"]))
+    runApprovalWF(df["Column Uuid"].tolist())
     return attributeTypeId
 
 
