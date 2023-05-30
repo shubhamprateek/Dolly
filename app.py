@@ -79,13 +79,13 @@ def Patch():
     attributeTypeId = {
         "Description": "00000000-0000-0000-0000-000000003114"
     }
-    domainId = "15d8e2e1-c6d6-4d2c-a1ef-e12312c08698"
+    domainId = "fe3a443d-cb64-414c-b022-18d03436bcdb"
 
     # Read the outputs
     outs = pd.read_excel(r"C:\Users\shubham.prateek\Downloads\example.xlsx")
-    #print(outs)
+    print(outs)
     # generate input structure
-    df = pd.DataFrame(["FACT_CALL"], columns=['Column Name'])
+    df = pd.DataFrame(["t_product"], columns=['Column Name'])
     # Stores the assets UUID
     for i in range(df.shape[0]):
         df.loc[i, "Column Uuid"] = searchAssetUuid(df.loc[i, "Column Name"], domainId)
@@ -94,8 +94,10 @@ def Patch():
         df["Tag"] = [outs.loc[0, "output"]]
         # Patch the df info to the respective assets in DGC
         word_list = df.iloc[0, 2].split(" ")
+        print(word_list)
         for i in range(df.shape[0]):
             assetName = df.loc[0, "Column Name"]
+            print(assetName)
             res = addTag(df.loc[0, "Column Uuid"], word_list)
             print(f"{assetName} Tag Attribute added: {res}")
 

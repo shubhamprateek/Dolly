@@ -84,6 +84,7 @@ def addAttribute(assetId, attributeTypeId, value):
 
 
 def addTag(assetId, value):
+    print(assetId)
     url = "https://fractalanalytics.collibra.com/rest/2.0"
     search_api = f"{url}/assets/{assetId}/tags"
     payload = json.dumps({
